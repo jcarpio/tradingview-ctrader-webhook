@@ -27,11 +27,11 @@ This application acts as a bridge between TradingView alerts and cTrader trading
 
 ```
 /home/ubuntu/henry-webhook/
-|│  henry-webhook.py         # Flask server that handles webhook requests
-|│  requirements.txt       # Python dependencies
-|├── env/              # Python virtual environment
-|├── logs/             # Folder where trades are logged monthly in CSV files
-|└── webhook-bot.service  # Optional reference systemd service file
+│  henry-webhook.py         # Flask server that handles webhook requests
+│  requirements.txt         # Python dependencies
+├── env/                    # Python virtual environment
+├── logs/                   # Folder where trades are logged monthly in CSV files
+└── webhook-bot.service     # Optional reference systemd service file
 ```
 
 ---
@@ -47,6 +47,11 @@ cd /home/ubuntu
 python3 -m venv env
 source env/bin/activate
 pip install -r henry-webhook/requirements.txt
+```
+
+To manually install dependencies (if requirements.txt is not present):
+```bash
+pip install flask ctrader-open-api
 ```
 
 ### 2. Create the Systemd Service
@@ -165,3 +170,4 @@ datetime.datetime.now(datetime.timezone.utc)
 ## 🙏 Credits
 
 This project was born from the vision of simplifying and empowering peaceful, automated trading operations for people around the world ✨.
+
