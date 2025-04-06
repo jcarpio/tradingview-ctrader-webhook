@@ -1,0 +1,13 @@
+[Unit]
+Description=Webhook Bot Flask App
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/henry-webhook
+Environment="PATH=/home/ubuntu/env/bin"
+ExecStart=/home/ubuntu/env/bin/python3 henry-webhook.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
