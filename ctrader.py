@@ -1,77 +1,65 @@
 import os
-import asyncio
 from dotenv import load_dotenv
-from openapi_client import Client, ProtoOAOrderType, ProtoOATimeInForce, ProtoOAOrderSide, ProtoOADealStatus
-from openapi_client.messages_pb2 import ProtoOAApplicationAuthRes, ProtoOASubscribeSpotsRes, ProtoOADealListRes, ProtoOANewOrderRes, ProtoOANewOrderReq
+from openapi_client import Client
+from openapi_client.exceptions import ClientException
+from openapi_client.models import ProtoOAOrderType, ProtoOATimeInForce, ProtoOAOrderSide, ProtoOADealStatus
 
 load_dotenv()
 
-SYMBOLS = {
-    "BTCUSD": 6080842,
-    "ETHUSD": 6080843,
-    "EURUSD": 1,
-    "XAUUSD": 2,
-}
-
 class CTrader:
     def __init__(self):
-        self.client_id = os.getenv("CTRADER_CLIENT_ID")
-        self.client_secret = os.getenv("CTRADER_CLIENT_SECRET")
-        self.access_token = os.getenv("CTRADER_ACCESS_TOKEN")
+        self.client_id = os.getenv("CLIENT_ID")
+        self.client_secret = os.getenv("CLIENT_SECRET")
         self.account_id = int(os.getenv("ACCOUNT_ID"))
+        self.access_token = os.getenv("CTRADER_ACCESS_TOKEN")
+        self.refresh_token = os.getenv("CTRADER_REFRESH_TOKEN")
         self.client = None
 
-    async def connect(self):
-        self.client = Client()
-        await self.client.connect()
-
-        await self.client.send_application_auth_req(
-            client_id=self.client_id,
-            client_secret=self.client_secret
-        )
-        print("[cTrader SDK] ✅ Autenticado correctamente")
-
-        await self.client.send_account_auth_req(
-            ctid_trader_account_id=self.account_id,
-            access_token=self.access_token
-        )
-        print(f"[cTrader SDK] ✅ Cuenta autenticada correctamente (ID: {self.account_id})")
-
-    async def place_market_order(self, symbol: str, side: str, volume: int):
-        if symbol not in SYMBOLS:
-            raise Exception(f"❌ El símbolo {symbol} no está en la lista local. Añádelo a SYMBOLS.")
-
-        symbol_id = SYMBOLS[symbol]
-        print(f"[cTrader SDK] ✅ Enviando orden: {side.upper()} {volume} de {symbol} (symbolId: {symbol_id})")
-
+    def connect(self):
         try:
-            request = ProtoOANewOrderReq(
+            self.client = Client()
+            self.client.connect()
+            print("[cTrader SDK] 🔌 Conectado correctamente")
+            
+            # Autenticarse
+            self.client.authenticate_by_refresh_token(
+                refresh_token=self.refresh_token,
+                client_id=self.client_id,
+                client_secret=self.client_secret,
+            )
+            print("[cTrader SDK] ✅ Autenticado correctamente")
+
+            # Autorizar cuenta
+            self.client.authorize_trading_account(
                 ctid_trader_account_id=self.account_id,
-                symbol_id=symbol_id,
+                access_token=self.client.access_token,
+            )
+            print(f"[cTrader SDK] ✅ Cuenta autenticada correctamente (ID: {self.account_id})")
+
+        except ClientException as e:
+            print("❌ Error conectando o autenticando con cTrader:", e)
+            raise e
+
+    def place_market_order(self, symbol_id, side, volume):
+        try:
+            response = self.client.send_market_order(
+                account_id=self.account_id,
+                symbol_id=int(symbol_id),
                 order_type=ProtoOAOrderType.MARKET,
                 order_side=ProtoOAOrderSide.BUY if side.upper() == "BUY" else ProtoOAOrderSide.SELL,
-                volume=volume,
+                volume=int(volume),
                 time_in_force=ProtoOATimeInForce.FILL_OR_KILL,
-                comment="Order from TradingView Webhook"
+                comment="Order from TradingView Webhook",
             )
 
-            response = await self.client.send(request)
-
-            if isinstance(response, ProtoOANewOrderRes):
-                print(f"[cTrader SDK] ✅ Orden aceptada por el servidor. Order ID: {response.order_id}")
+            if response.deal_status == ProtoOADealStatus.FILLED:
+                print(f"[cTrader SDK] ✅ Orden ejecutada correctamente (orderId: {response.order_id})")
             else:
-                print(f"[cTrader SDK] ❓ Respuesta inesperada del servidor: {type(response)}")
+                print(f"⚠️ Orden enviada pero no fue ejecutada (status: {response.deal_status})")
 
-        except Exception as e:
-            print(f"⚠️ Error al enviar la orden: {str(e)}")
+        except ClientException as e:
+            print("❌ Error al enviar orden de mercado:", e)
+            raise e
         finally:
-            await self.client.close()
+            self.client.stop()
             print("[cTrader SDK] 🔌 Conexión cerrada correctamente")
-
-# Ejemplo para probar:
-# if __name__ == '__main__':
-#     async def main():
-#         trader = CTrader()
-#         await trader.connect()
-#         await trader.place_market_order("BTCUSD", "BUY", 100000)
-#     asyncio.run(main())
