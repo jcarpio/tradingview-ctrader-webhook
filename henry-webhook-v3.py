@@ -27,9 +27,9 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 @app.route("/webhook", methods=["POST"])
 def webhook():
     # Validar token secreto desde header Authorization
-    auth = request.headers.get("Authorization", "")
-    if not auth.startswith("Bearer ") or auth.split(" ")[1] != SECRET_TOKEN:
-        return jsonify({"error": "Unauthorized"}), 401
+    token = request.json.get("token", "")
+    if token != SECRET_TOKEN:
+       return jsonify({"error": "Unauthorized"}), 401
 
     # Leer datos JSON del body
     data = request.json
