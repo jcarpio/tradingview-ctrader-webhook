@@ -1,0 +1,16 @@
+# Archivos sensibles y configuración
+.env
+
+# Logs de operaciones
+logs/
+*.log
+
+# SDK local
+sdk/
+
+# Archivos temporales de Python y editores
+__pycache__/
+*.py[cod]
+*.swp
+*.swo
+*.DS_Store
