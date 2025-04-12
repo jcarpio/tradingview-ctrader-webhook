@@ -358,3 +358,72 @@ timestamp,symbol,order,volume
 /home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
 /home/ubuntu/tradingview-ctrader-webhook/ctrader.py:304:process_order_response
 ]"
+2025-04-12T19:38:01.543683+00:00,BTCUSD,SELL,100,"ERROR: [Failure instance: Traceback: <class 'Exception'>: Cuenta no autorizada. Reiniciando autenticación.
+/home/ubuntu/OpenApiPy/ctrader_open_api/factory.py:15:received
+/home/ubuntu/OpenApiPy/ctrader_open_api/client.py:46:_received
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:877:callback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:304:process_order_response
+]"
+2025-04-12T19:39:01.541866+00:00,BTCUSD,BUY,100,"ERROR: [Failure instance: Traceback: <class 'Exception'>: Cuenta no autorizada. Reiniciando autenticación.
+/home/ubuntu/OpenApiPy/ctrader_open_api/factory.py:15:received
+/home/ubuntu/OpenApiPy/ctrader_open_api/client.py:46:_received
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:877:callback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:304:process_order_response
+]"
+2025-04-12T19:40:01.543579+00:00,BTCUSD,SELL,100,"ERROR: [Failure instance: Traceback: <class 'Exception'>: Cuenta no autorizada. Reiniciando autenticación.
+/home/ubuntu/OpenApiPy/ctrader_open_api/factory.py:15:received
+/home/ubuntu/OpenApiPy/ctrader_open_api/client.py:46:_received
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:877:callback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:304:process_order_response
+]"
+2025-04-12T19:41:01.542596+00:00,BTCUSD,SELL,100,"ERROR: [Failure instance: Traceback: <class 'Exception'>: Cuenta no autorizada. Reiniciando autenticación.
+/home/ubuntu/OpenApiPy/ctrader_open_api/factory.py:15:received
+/home/ubuntu/OpenApiPy/ctrader_open_api/client.py:46:_received
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:877:callback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:304:process_order_response
+]"
+2025-04-12T19:42:01.544385+00:00,BTCUSD,SELL,100,"ERROR: [Failure instance: Traceback: <class 'Exception'>: Cuenta no autorizada. Reiniciando autenticación.
+/home/ubuntu/OpenApiPy/ctrader_open_api/factory.py:15:received
+/home/ubuntu/OpenApiPy/ctrader_open_api/client.py:46:_received
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:877:callback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:304:process_order_response
+]"
+2025-04-12T19:43:02.026806+00:00,BTCUSD,BUY,100,SUCCESS
+2025-04-12T19:44:02.027270+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:45:02.027512+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:46:02.027787+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:47:02.028589+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:48:03.027829+00:00,BTCUSD,BUY,100,SUCCESS
+2025-04-12T19:49:02.027676+00:00,BTCUSD,BUY,100,SUCCESS
+2025-04-12T19:50:01.421297+00:00,BTCUSD,BUY,100,SUCCESS
+2025-04-12T19:51:01.421227+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:52:01.420159+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:53:04.420660+00:00,BTCUSD,BUY,100,SUCCESS
+2025-04-12T19:54:01.421194+00:00,BTCUSD,SELL,100,SUCCESS
+2025-04-12T19:55:01.922802+00:00,BTCUSD,BUY,100,SUCCESS
+2025-04-12T19:56:00.924765+00:00,BTCUSD,SELL,1,SUCCESS
+2025-04-12T19:57:01.924389+00:00,BTCUSD,BUY,1,SUCCESS
+2025-04-12T19:58:01.931081+00:00,BTCUSD,BUY,1,SUCCESS
+2025-04-12T19:59:01.922899+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-12T20:00:01.924869+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-12T20:01:01.851664+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-12T20:02:01.840287+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-12T20:03:01.845021+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-12T20:04:05.843196+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-12T20:05:01.847210+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-12T20:06:02.842353+00:00,BTCUSD,BUY,0.1,SUCCESS

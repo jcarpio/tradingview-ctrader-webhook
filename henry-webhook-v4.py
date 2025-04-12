@@ -12,6 +12,10 @@ from ctrader import run_ctrader_order, initialize_client
 load_dotenv()
 SECRET_TOKEN = os.getenv("SECRET_TOKEN")
 
+# Configuración de límites
+MAX_VOLUME = 50  # Volumen máximo permitido por la cuenta
+DEFAULT_VOLUME = 0.1  # Volumen predeterminado para pruebas
+
 # Inicializar servidor Flask
 app = Flask(__name__)
 
@@ -49,9 +53,21 @@ def webhook():
         # Obtener parámetros de la orden
         symbol = data.get("symbol")
         order_type = data.get("order")
-        volume = data.get("volume")
         
-        if not all([symbol, order_type, volume]):
+        # Obtener y validar el volumen
+        try:
+            volume = float(data.get("volume", DEFAULT_VOLUME))
+        except (ValueError, TypeError):
+            volume = DEFAULT_VOLUME
+        
+        # Limitar el volumen al máximo permitido
+        volume = min(volume, MAX_VOLUME)
+        
+        # Usar un volumen pequeño para prueba si es muy grande
+        if volume > 10:
+            print(f"⚠️ Volumen {volume} es grande, considere reducirlo para evitar errores de saldo")
+        
+        if not all([symbol, order_type]):
             return jsonify({
                 "error": "Invalid payload - missing required parameters",
                 "received": data
@@ -63,7 +79,7 @@ def webhook():
         # Ejecutar orden (desde el hilo de Twisted)
         def execute_order():
             try:
-                d = run_ctrader_order(symbol, order_type.upper(), int(volume))
+                d = run_ctrader_order(symbol, order_type.upper(), volume)
                 
                 def on_order_success(result):
                     print(f"✅ Orden completada: {result}")
@@ -86,7 +102,7 @@ def webhook():
         # Devolvemos respuesta inmediata (la orden se procesa async)
         return jsonify({
             "status": "processing", 
-            "message": "Orden enviada a procesar",
+            "message": f"Orden enviada a procesar (volumen ajustado a {volume})",
             "details": {
                 "symbol": symbol, 
                 "side": order_type.upper(), 
