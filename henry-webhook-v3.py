@@ -1,21 +1,20 @@
 import os
 import csv
 import datetime
+import asyncio
 from flask import Flask, request, jsonify
-from ctrader import CTrader  # Asegúrate de tener este archivo listo en el mismo directorio
+from ctrader import CTrader  # Cliente WebSocket con refresh token
 from dotenv import load_dotenv
 
 # Cargar variables de entorno desde .env
 load_dotenv()
 
 SECRET_TOKEN = os.getenv("SECRET_TOKEN")
-CLIENT_ID = os.getenv("CTRADER_CLIENT_ID")
-CLIENT_SECRET = os.getenv("CTRADER_CLIENT_SECRET")
-ACCESS_TOKEN = os.getenv("CTRADER_ACCESS_TOKEN")
-ACCOUNT_ID = os.getenv("CTRADER_ACCOUNT_ID")
+ACCOUNT_ID = os.getenv("ACCOUNT_ID")
+REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
 
-# Inicializar cliente de cTrader
-ctrader = CTrader(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, access_token=ACCESS_TOKEN)
+# Inicializar cliente de cTrader con refresh token
+ctrader = CTrader(refresh_token=REFRESH_TOKEN)
 
 # Inicializar servidor Flask
 app = Flask(__name__)
@@ -26,7 +25,7 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    # Validar token secreto desde header Authorization
+    # Validar token secreto desde el cuerpo del mensaje (para compatibilidad con TradingView)
     token = request.json.get("token", "")
     if token != SECRET_TOKEN:
        return jsonify({"error": "Unauthorized"}), 401
@@ -41,13 +40,11 @@ def webhook():
         return jsonify({"error": "Invalid payload"}), 400
 
     try:
-        # Ejecutar orden BUY o SELL
-        if order_type.upper() == "BUY":
-            response = ctrader.place_market_order(ACCOUNT_ID, symbol, "buy", volume)
-        elif order_type.upper() == "SELL":
-            response = ctrader.place_market_order(ACCOUNT_ID, symbol, "sell", volume)
-        else:
-            return jsonify({"error": "Unknown order type"}), 400
+        async def execute_order():
+            await ctrader.connect()
+            await ctrader.place_market_order(symbol, order_type, volume)
+
+        asyncio.run(execute_order())
 
         # Registrar operación en logs mensuales
         now = datetime.datetime.now(datetime.timezone.utc)
@@ -63,10 +60,10 @@ def webhook():
                 symbol,
                 order_type.upper(),
                 volume,
-                response.get("order_id", "N/A")
+                "-"  # El SDK actual no devuelve order_id, pero se puede extender
             ])
 
-        return jsonify({"status": "success", "order": response}), 200
+        return jsonify({"status": "success", "symbol": symbol, "side": order_type, "volume": volume}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
