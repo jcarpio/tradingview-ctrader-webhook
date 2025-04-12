@@ -1,59 +1,69 @@
 import os
-import logging
+import csv
+import datetime
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-from ctrader_open_api import protocol_pb2
-from ctrader_open_api.client import SpotwareClient
-from ctrader_open_api.listener import SpotwareListener
+from twisted.internet import reactor
+from ctrader import run_ctrader_order
 
+# Cargar variables de entorno
 load_dotenv()
 
-class CTraderSDK:
-    def __init__(self):
-        self.client_id = os.getenv("CTRADER_CLIENT_ID")
-        self.client_secret = os.getenv("CTRADER_CLIENT_SECRET")
-        self.account_id = int(os.getenv("ACCOUNT_ID"))
-        self.refresh_token = os.getenv("CTRADER_REFRESH_TOKEN")
-        self.client = None
-        self.connected = False
+SECRET_TOKEN = os.getenv("SECRET_TOKEN")
 
-    def start(self):
-        if not all([self.client_id, self.client_secret, self.refresh_token]):
-            raise Exception("⚠️ Faltan variables de entorno para conectar con cTrader API")
+# Inicializar servidor Flask
+app = Flask(__name__)
 
-        self.client = SpotwareClient(
-            client_id=self.client_id,
-            client_secret=self.client_secret,
-            refresh_token=self.refresh_token,
-            environment="demo"  # o "live" si fuese necesario
-        )
+# Crear carpeta de logs si no existe
+LOGS_DIR = "logs"
+os.makedirs(LOGS_DIR, exist_ok=True)
 
-        self.client.add_listener(SpotwareListener(self.client))
-        self.client.connect()
-        self.connected = True
-        logging.info("[cTrader SDK] ✅ Cliente conectado con éxito")
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    try:
+        token = request.json.get("token", "")
+        if token != SECRET_TOKEN:
+            return jsonify({"error": "Unauthorized"}), 401
 
-    def stop(self):
-        if self.client:
-            self.client.close()
-            self.connected = False
-            logging.info("[cTrader SDK] 🔌 Conexión cerrada correctamente")
+        data = request.json
+        symbol = data.get("symbol")
+        order_type = data.get("order")
+        volume = data.get("volume")
 
-    def send_market_order(self, symbol_id: int, side: str, volume: int):
-        if not self.connected:
-            self.start()
+        if not all([symbol, order_type, volume]):
+            return jsonify({"error": "Invalid payload"}), 400
 
-        order_side_enum = protocol_pb2.OAOrderSide.BUY if side.upper() == "BUY" else protocol_pb2.OAOrderSide.SELL
+        # Ejecutar orden usando el reactor de Twisted
+        run_ctrader_order(symbol, order_type.upper(), int(volume))
 
-        self.client.send_request(
-            payload_type=protocol_pb2.OA_NEW_ORDER_REQ,
-            payload={
-                "accountId": self.account_id,
-                "symbolId": symbol_id,
-                "orderType": protocol_pb2.OAOrderType.MARKET,
-                "orderSide": order_side_enum,
-                "volume": volume,
-                "timeInForce": protocol_pb2.OATimeInForce.FOK,
-                "comment": "Order from TradingView Webhook"
-            }
-        )
-        logging.info(f"[cTrader SDK] ✅ Orden de mercado enviada: {side.upper()} {volume} (symbolId: {symbol_id})")
+        # Registrar operación
+        now = datetime.datetime.now(datetime.timezone.utc)
+        log_filename = f"{LOGS_DIR}/operations_{now.strftime('%Y-%m')}.csv"
+        write_header = not os.path.exists(log_filename)
+
+        with open(log_filename, mode="a", newline="") as file:
+            writer = csv.writer(file)
+            if write_header:
+                writer.writerow(["timestamp", "symbol", "order", "volume", "order_id"])
+            writer.writerow([
+                now.isoformat(),
+                symbol,
+                order_type.upper(),
+                volume,
+                "-"  # No se recibe order_id en esta versión aún
+            ])
+
+        return jsonify({"status": "success", "symbol": symbol, "side": order_type, "volume": volume}), 200
+
+    except Exception as e:
+        print("❌ Error procesando webhook:", str(e))
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    from threading import Thread
+
+    def run_flask():
+        app.run(host="0.0.0.0", port=5001, debug=True)
+
+    Thread(target=run_flask).start()
+    reactor.run()

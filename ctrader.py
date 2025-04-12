@@ -1,65 +1,58 @@
 import os
 from dotenv import load_dotenv
-from openapi_client import Client
-from openapi_client.exceptions import ClientException
-from openapi_client.models import ProtoOAOrderType, ProtoOATimeInForce, ProtoOAOrderSide, ProtoOADealStatus
+from ctrader_open_api import Client
 
 load_dotenv()
 
-class CTrader:
-    def __init__(self):
-        self.client_id = os.getenv("CLIENT_ID")
-        self.client_secret = os.getenv("CLIENT_SECRET")
-        self.account_id = int(os.getenv("ACCOUNT_ID"))
-        self.access_token = os.getenv("CTRADER_ACCESS_TOKEN")
-        self.refresh_token = os.getenv("CTRADER_REFRESH_TOKEN")
-        self.client = None
+# Diccionario de símbolos conocidos con su symbolId en la demo de cTrader
+SYMBOLS = {
+    "BTCUSD": 6080842,
+    "ETHUSD": 6080843,
+    "EURUSD": 1,
+    "XAUUSD": 2,
+    # Puedes añadir más aquí si los necesitas
+}
 
-    def connect(self):
-        try:
-            self.client = Client()
-            self.client.connect()
-            print("[cTrader SDK] 🔌 Conectado correctamente")
-            
-            # Autenticarse
-            self.client.authenticate_by_refresh_token(
-                refresh_token=self.refresh_token,
-                client_id=self.client_id,
-                client_secret=self.client_secret,
-            )
-            print("[cTrader SDK] ✅ Autenticado correctamente")
+# ⚙️ Configuración
+CLIENT_ID = os.getenv("CTRADER_CLIENT_ID")
+CLIENT_SECRET = os.getenv("CTRADER_CLIENT_SECRET")
+ACCESS_TOKEN = os.getenv("CTRADER_ACCESS_TOKEN")
+REFRESH_TOKEN = os.getenv("CTRADER_REFRESH_TOKEN")
+ACCOUNT_ID = int(os.getenv("ACCOUNT_ID"))
 
-            # Autorizar cuenta
-            self.client.authorize_trading_account(
-                ctid_trader_account_id=self.account_id,
-                access_token=self.client.access_token,
-            )
-            print(f"[cTrader SDK] ✅ Cuenta autenticada correctamente (ID: {self.account_id})")
+# ✅ Función principal para ejecutar una orden
+def run_ctrader_order(symbol, side, volume):
+    if symbol not in SYMBOLS:
+        raise Exception(f"❌ El símbolo {symbol} no está en la lista local. Añádelo a SYMBOLS.")
+    
+    symbol_id = SYMBOLS[symbol]
 
-        except ClientException as e:
-            print("❌ Error conectando o autenticando con cTrader:", e)
-            raise e
+    # Crear cliente
+    client = Client(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        access_token=ACCESS_TOKEN,
+        refresh_token=REFRESH_TOKEN,
+        account_id=ACCOUNT_ID,
+        is_demo=True
+    )
 
-    def place_market_order(self, symbol_id, side, volume):
-        try:
-            response = self.client.send_market_order(
-                account_id=self.account_id,
-                symbol_id=int(symbol_id),
-                order_type=ProtoOAOrderType.MARKET,
-                order_side=ProtoOAOrderSide.BUY if side.upper() == "BUY" else ProtoOAOrderSide.SELL,
-                volume=int(volume),
-                time_in_force=ProtoOATimeInForce.FILL_OR_KILL,
-                comment="Order from TradingView Webhook",
-            )
+    try:
+        print("[cTrader SDK] 🚀 Ejecutando operación...")
+        order = client.trade.open_market_order(
+            symbol_id=symbol_id,
+            side=side.upper(),  # BUY o SELL
+            volume=int(volume),
+            comment="Order from TradingView Webhook"
+        )
 
-            if response.deal_status == ProtoOADealStatus.FILLED:
-                print(f"[cTrader SDK] ✅ Orden ejecutada correctamente (orderId: {response.order_id})")
-            else:
-                print(f"⚠️ Orden enviada pero no fue ejecutada (status: {response.deal_status})")
+        if order.get("status") == "FILLED":
+            print(f"[cTrader SDK] ✅ ORDEN FILLED: {side.upper()} {volume} {symbol} (ID: {order['orderId']})")
+        else:
+            print(f"[cTrader SDK] ⚠️ ORDEN ENVIADA pero con estado: {order.get('status')}")
+        
+        return order
 
-        except ClientException as e:
-            print("❌ Error al enviar orden de mercado:", e)
-            raise e
-        finally:
-            self.client.stop()
-            print("[cTrader SDK] 🔌 Conexión cerrada correctamente")
+    except Exception as e:
+        print("❌ Error enviando orden:", str(e))
+        raise
