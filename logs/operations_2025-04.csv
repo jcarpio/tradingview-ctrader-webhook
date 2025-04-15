@@ -1077,3 +1077,35 @@ timestamp,symbol,order,volume
 --- <exception caught here> ---
 /home/ubuntu/tradingview-ctrader-webhook/ctrader.py:179:send_market_order
 ]"
+2025-04-15T22:15:03.344321+00:00,BTCUSD,SELL,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'AttributeError'>: 'Client' object has no attribute 'open_market_sell'
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:249:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:202:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:197:send_market_order
+]"
+2025-04-15T22:17:01.313015+00:00,BTCUSD,SELL,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'ImportError'>: cannot import name 'ProtoOATradeSide' from 'ctrader_open_api.messages.OpenApiCommonMessages_pb2' (/home/ubuntu/OpenApiPy/ctrader_open_api/messages/OpenApiCommonMessages_pb2.py)
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:271:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:214:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:180:send_market_order
+]"
+2025-04-15T22:18:01.518123+00:00,BTCUSD,BUY,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'ImportError'>: cannot import name 'ProtoOATradeSide' from 'ctrader_open_api.messages.OpenApiCommonMessages_pb2' (/home/ubuntu/OpenApiPy/ctrader_open_api/messages/OpenApiCommonMessages_pb2.py)
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:271:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:214:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:180:send_market_order
+]"
+2025-04-15T22:19:01.593448+00:00,BTCUSD,SELL,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'ImportError'>: cannot import name 'ProtoOATradeSide' from 'ctrader_open_api.messages.OpenApiCommonMessages_pb2' (/home/ubuntu/OpenApiPy/ctrader_open_api/messages/OpenApiCommonMessages_pb2.py)
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:271:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:214:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:180:send_market_order
+]"

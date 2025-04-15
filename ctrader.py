@@ -167,41 +167,63 @@ def send_market_order(symbol, side, volume, sl_money=0, tp_money=0):
     Returns:
         Deferred con el resultado de la orden
     """
-    global client, account_id
+    global client, ACCOUNT_ID
     deferred = defer.Deferred()
     
     try:
-        # Crear parámetros de la orden
-        order_params = {
-            "symbolName": symbol,
-            "tradeSide": side,
-            "volume": volume,
-            "accountId": account_id
-        }
+        # Obtener el symbolId del diccionario SYMBOLS o usar un valor predeterminado
+        symbol_id = SYMBOLS.get(symbol)
+        if not symbol_id:
+            raise ValueError(f"Symbol ID not found for {symbol}. Add it to the SYMBOLS dictionary.")
         
-        # Añadir stop loss y take profit si se especifican
+        # Convertir el lado de la operación al formato adecuado
+        from ctrader_open_api.messages.OpenApiCommonMessages_pb2 import ProtoOATradeSide
+        trade_side = ProtoOATradeSide.BUY if side == "BUY" else ProtoOATradeSide.SELL
+        
+        # Crear la solicitud de nueva orden
+        from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOANewOrderReq
+        
+        # Convertir el volumen de unidades de trading a cTrader (lotes a volumen)
+        # Por lo general, 1 lote = 100000 unidades para Forex, pero puede variar
+        volume_in_units = int(volume * 100000)  # Ajusta este factor según tu broker
+        
+        request = ProtoOANewOrderReq()
+        request.ctidTraderAccountId = ACCOUNT_ID
+        request.symbolId = symbol_id
+        request.orderType = 1  # 1 = Market order
+        request.tradeSide = trade_side
+        request.volume = volume_in_units
+        
+        # Añadir SL/TP si están presentes
         if sl_money > 0:
-            order_params["stopLossInMoney"] = sl_money
+            request.stopLossInPips = convert_money_to_pips(symbol, sl_money, trade_side)
             
         if tp_money > 0:
-            order_params["takeProfitInMoney"] = tp_money
+            request.takeProfitInPips = convert_money_to_pips(symbol, tp_money, trade_side)
         
-        print(f"[cTrader] 📊 Enviando orden de mercado: {order_params}")
+        print(f"[cTrader] 📊 Enviando orden de mercado: {request}")
         
         # Enviar la orden a través del cliente de cTrader
-        if side == "BUY":
-            # Ejemplo: Reemplaza esta línea con tu llamada real a la API de cTrader
-            order_result = client.open_market_buy(order_params)  
-        else:
-            # Ejemplo: Reemplaza esta línea con tu llamada real a la API de cTrader
-            order_result = client.open_market_sell(order_params)
+        order_deferred = client.send(request)
+        order_deferred.addCallback(on_order_sent)
+        order_deferred.addErrback(on_order_error)
+        order_deferred.chainDeferred(deferred)
         
-        deferred.callback(order_result)
     except Exception as e:
         print(f"[cTrader] ❌ Error enviando orden: {e}")
         deferred.errback(e)
     
     return deferred
+
+def convert_money_to_pips(symbol, money_amount, trade_side):
+    """
+    Función auxiliar para convertir dinero a pips
+    Esta es una implementación simplificada - en un caso real
+    necesitarías obtener el precio actual y hacer cálculos más precisos
+    """
+    # Implementación simple - reemplazar con lógica real
+    # Esta es solo una aproximación, lo ideal sería obtener el precio actual
+    return int(money_amount * 10)  # Ejemplo: 1€ = 10 pips
 
 def on_order_sent(response):
     """Callback después de enviar una orden"""
