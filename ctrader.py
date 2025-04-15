@@ -437,29 +437,9 @@ def get_open_positions():
         request = ProtoOAReconcileReq()
         request.ctidTraderAccountId = ACCOUNT_ID
         
-        # Guardar el manejador original (usar getMessageReceivedCallback)
-        original_handler = client.getMessageReceivedCallback()
+        # Guardar el manejador original (acceder directamente al atributo en lugar de usar un método getter)
+        original_handler = client.messageReceivedCallback
         
-        # Función para manejar la respuesta (MUEVE ESTA DEFINICIÓN AQUÍ)
-        def on_reconcile_received(msg):
-            from ctrader_open_api import Protobuf
-            from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOAReconcileRes
-            
-            # Solo procesar mensajes de tipo ProtoOAReconcileRes
-            if msg.payloadType == ProtoOAReconcileRes().payloadType:
-                # resto de la implementación...
-                return True
-            return False
-        
-        # Establecer un manejador temporal
-        def temp_handler(client_instance, msg):
-            if not on_reconcile_received(msg):
-                # Si no procesamos este mensaje, pasarlo al manejador original
-                if original_handler:
-                    original_handler(client_instance, msg)
-        
-        client.setMessageReceivedCallback(temp_handler)
-             
         # Función para manejar la respuesta
         def on_reconcile_received(msg):
             from ctrader_open_api import Protobuf
@@ -501,9 +481,6 @@ def get_open_positions():
                 result_deferred.callback(open_positions)
                 return True
             return False
-        
-        # Guardar el manejador original
-        original_handler = client.messageReceivedCallback
         
         # Establecer un manejador temporal
         def temp_handler(client_instance, msg):
