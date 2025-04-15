@@ -975,3 +975,105 @@ timestamp,symbol,order,volume
 2025-04-15T20:56:01.527928+00:00,BTCUSD,BUY,0.1,SUCCESS
 2025-04-15T20:57:01.497498+00:00,BTCUSD,BUY,0.1,SUCCESS
 2025-04-15T20:58:02.494775+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:07:20.658687+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:08:16.829978+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:09:08.160161+00:00,BTCUSD,SELL,0.1,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T21:10:07.136401+00:00,BTCUSD,SELL,0.1,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T21:11:08.766188+00:00,BTCUSD,BUY,0.1,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T21:17:39.504584+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:18:24.970707+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:20:01.844535+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:21:00.840459+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:22:02.839541+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:23:01.840573+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:24:00.836943+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:25:01.836090+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:26:08.844318+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:27:01.844464+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:28:01.838402+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:29:01.840469+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:30:01.837618+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:31:01.844509+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:32:01.836816+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:33:01.842485+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:34:01.841656+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:35:02.842935+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:36:01.837916+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:37:01.839875+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:38:01.839538+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:39:01.840843+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:40:01.841911+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:41:01.842216+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:42:01.835545+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:43:01.844809+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:44:01.840019+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:45:02.843680+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:46:01.838132+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:47:01.843192+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:48:02.843648+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:49:04.841181+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T21:50:01.836173+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:51:01.835335+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:52:01.835668+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:53:01.842394+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:54:01.834508+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T21:55:01.841743+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T22:08:08.301346+00:00,BTCUSD,BUY,0.1,"ERROR: [Failure instance: Traceback: <class 'NameError'>: name 'account_id' is not defined
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:249:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:202:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:179:send_market_order
+]"
+2025-04-15T22:09:00.933042+00:00,BTCUSD,SELL,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'NameError'>: name 'account_id' is not defined
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:249:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:202:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:179:send_market_order
+]"
+2025-04-15T22:10:01.848423+00:00,BTCUSD,SELL,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'NameError'>: name 'account_id' is not defined
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:249:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:202:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:179:send_market_order
+]"
+2025-04-15T22:11:00.869445+00:00,BTCUSD,BUY,0.1,1.0,3.0,"ERROR: [Failure instance: Traceback: <class 'NameError'>: name 'account_id' is not defined
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:705:mainLoop
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/base.py:1090:runUntilCurrent
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:249:send_order_when_ready
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:202:send_market_order
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:179:send_market_order
+]"

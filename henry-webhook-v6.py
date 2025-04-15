@@ -4,23 +4,13 @@ import datetime
 import traceback
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-from twisted.internet import reactor, defer
+from twisted.internet import reactor
 from threading import Thread
 from ctrader import run_ctrader_order, initialize_client
-
-# Importaciones corregidas para la API de cTrader
-from ctrader_open_api.messages.OpenApiMessages_pb2 import (
-    ProtoOAReconcileReq,
-    ProtoOAClosePositionReq,
-    ProtoOATraderReq,
-    ProtoOAOrderListReq
-)
-from ctrader_open_api.messages.OpenApiModelMessages_pb2 import ProtoOATradeData
 
 # Cargar variables de entorno
 load_dotenv()
 SECRET_TOKEN = os.getenv("SECRET_TOKEN")
-ACCOUNT_ID = int(os.getenv("ACCOUNT_ID"))
 
 # Configuración de límites
 MAX_VOLUME = 50  # Volumen máximo permitido por la cuenta
@@ -32,88 +22,6 @@ app = Flask(__name__)
 # Crear carpeta de logs si no existe
 LOGS_DIR = "logs"
 os.makedirs(LOGS_DIR, exist_ok=True)
-
-# Variable global para almacenar posiciones abiertas
-open_positions = []
-
-def get_open_positions():
-    """
-    Obtiene todas las posiciones abiertas para la cuenta usando ProtoOATraderReq
-    """
-    print("[cTrader] 🔍 Obteniendo posiciones abiertas...")
-    client = initialize_client()[0]
-    
-    # En lugar de ProtoOAReconcileReq, usamos ProtoOATraderReq para obtener el estado de la cuenta
-    request = ProtoOATraderReq()
-    request.ctidTraderAccountId = ACCOUNT_ID
-    
-    positions_deferred = defer.Deferred()
-    
-    def handle_trader_response(response):
-        # Si obtenemos los datos del trader, ahora solicitamos las órdenes abiertas
-        order_req = ProtoOAOrderListReq()
-        order_req.ctidTraderAccountId = ACCOUNT_ID
-        
-        orders_deferred = client.send(order_req)
-        
-        def handle_orders(order_response):
-            global open_positions
-            # Resetear la lista de posiciones
-            open_positions = []
-            
-            # Extraer posiciones abiertas del mensaje de órdenes
-            print(f"[cTrader] ✅ Respuesta recibida con: {order_response}")
-            
-            # En una implementación completa, deberíamos parsear aquí los detalles de las posiciones
-            # Este es un enfoque alternativo más simple: simplemente marcamos que no hay posiciones
-            # y continuamos con la ejecución de la nueva orden
-            print("[cTrader] ℹ️ No se encontraron posiciones activas (o no se pudieron procesar)")
-            
-            positions_deferred.callback([])  # Callback con lista vacía
-            return open_positions
-        
-        def handle_orders_error(error):
-            print(f"[cTrader] ❌ Error al obtener órdenes: {error}")
-            # A pesar del error, devolvemos una lista vacía para continuar con el flujo
-            positions_deferred.callback([])
-            return error
-        
-        orders_deferred.addCallback(handle_orders)
-        orders_deferred.addErrback(handle_orders_error)
-        
-        return response
-    
-    def handle_error(error):
-        print(f"[cTrader] ❌ Error al obtener datos del trader: {error}")
-        # A pesar del error, devolvemos una lista vacía para continuar con el flujo
-        positions_deferred.callback([])
-        return error
-    
-    d = client.send(request)
-    d.addCallback(handle_trader_response)
-    d.addErrback(handle_error)
-    
-    return positions_deferred
-
-def close_all_positions():
-    """
-    Cierra todas las posiciones abiertas en la cuenta
-    """
-    print("[cTrader] 🔒 Verificando si hay posiciones para cerrar...")
-    
-    # Para evitar la complejidad de parsear posiciones y manejar errores,
-    # vamos a simplificar: siempre asumimos éxito en esta función
-    close_all_deferred = defer.Deferred()
-    
-    # Después de un breve tiempo, devolvemos éxito
-    def report_success():
-        print("[cTrader] ✅ No hay posiciones para cerrar o se cerraron con éxito")
-        close_all_deferred.callback([])
-    
-    # Programamos el callback con un pequeño retraso
-    reactor.callLater(0.5, report_success)
-    
-    return close_all_deferred
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -155,6 +63,17 @@ def webhook():
         # Limitar el volumen al máximo permitido
         volume = min(volume, MAX_VOLUME)
         
+        # Obtener stop loss y take profit en unidades monetarias (EUR)
+        try:
+            sl_money = float(data.get("sl_money", 0))
+        except (ValueError, TypeError):
+            sl_money = 0
+            
+        try:
+            tp_money = float(data.get("tp_money", 0))
+        except (ValueError, TypeError):
+            tp_money = 0
+        
         # Usar un volumen pequeño para prueba si es muy grande
         if volume > 10:
             print(f"⚠️ Volumen {volume} es grande, considere reducirlo para evitar errores de saldo")
@@ -166,43 +85,52 @@ def webhook():
             }), 400
         
         # Registrar que se recibió el webhook
-        print(f"📩 Webhook recibido: {symbol} {order_type} {volume}")
+        sl_tp_info = ""
+        if sl_money > 0 or tp_money > 0:
+            sl_tp_info = f" SL: {sl_money}€ TP: {tp_money}€"
+        print(f"📩 Webhook recibido: {symbol} {order_type} {volume}{sl_tp_info}")
         
         # Ejecutar orden (desde el hilo de Twisted)
         def execute_order():
             try:
-                # Simplificamos el flujo para ir directamente a la ejecución de la orden
-                print(f"[cTrader] 🔄 Ejecutando nueva orden {order_type} para {symbol}...")
-                d_order = run_ctrader_order(symbol, order_type.upper(), volume)
+                d = run_ctrader_order(symbol, order_type.upper(), volume, sl_money, tp_money)
                 
                 def on_order_success(result):
-                    print(f"[cTrader] ✅ Nueva orden completada: {result}")
-                    log_operation(symbol, order_type, volume, "SUCCESS")
+                    print(f"✅ Orden completada: {result}")
+                    log_operation(symbol, order_type, volume, "SUCCESS", sl_money, tp_money)
                 
                 def on_order_error(err):
-                    print(f"[cTrader] ❌ Error en la nueva orden: {err}")
-                    log_operation(symbol, order_type, volume, f"ERROR: {err}")
+                    print(f"❌ Error en la orden: {err}")
+                    log_operation(symbol, order_type, volume, f"ERROR: {err}", sl_money, tp_money)
                 
-                d_order.addCallback(on_order_success)
-                d_order.addErrback(on_order_error)
-                
+                d.addCallback(on_order_success)
+                d.addErrback(on_order_error)
             except Exception as e:
-                print(f"❌ Error al ejecutar la orden: {str(e)}")
+                print(f"❌ Error al ejecutar orden: {str(e)}")
                 traceback.print_exc()
-                log_operation(symbol, order_type, volume, f"EXCEPTION: {str(e)}")
+                log_operation(symbol, order_type, volume, f"EXCEPTION: {str(e)}", sl_money, tp_money)
         
         # Programamos la ejecución en el reactor de Twisted
         reactor.callFromThread(execute_order)
         
+        # Preparar detalles para la respuesta
+        details = {
+            "symbol": symbol, 
+            "side": order_type.upper(), 
+            "volume": volume
+        }
+        
+        # Añadir información de SL/TP si están presentes
+        if sl_money > 0:
+            details["stop_loss"] = f"{sl_money}€"
+        if tp_money > 0:
+            details["take_profit"] = f"{tp_money}€"
+        
         # Devolvemos respuesta inmediata (la orden se procesa async)
         return jsonify({
             "status": "processing", 
-            "message": f"Orden enviada a procesar: {symbol} {order_type}, volumen: {volume}",
-            "details": {
-                "symbol": symbol, 
-                "side": order_type.upper(), 
-                "volume": volume
-            }
+            "message": f"Orden enviada a procesar (volumen ajustado a {volume})",
+            "details": details
         }), 200
     
     except Exception as e:
@@ -210,7 +138,7 @@ def webhook():
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
-def log_operation(symbol, order_type, volume, status):
+def log_operation(symbol, order_type, volume, status, sl_money=0, tp_money=0):
     """Registra la operación en el archivo de log"""
     try:
         now = datetime.datetime.now(datetime.timezone.utc)
@@ -220,12 +148,14 @@ def log_operation(symbol, order_type, volume, status):
         with open(log_filename, mode="a", newline="") as file:
             writer = csv.writer(file)
             if write_header:
-                writer.writerow(["timestamp", "symbol", "order", "volume", "status"])
+                writer.writerow(["timestamp", "symbol", "order", "volume", "sl_money", "tp_money", "status"])
             writer.writerow([
                 now.isoformat(),
                 symbol,
                 order_type.upper(),
                 volume,
+                sl_money,
+                tp_money,
                 status
             ])
     except Exception as e:

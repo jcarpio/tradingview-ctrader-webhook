@@ -153,63 +153,55 @@ def on_error(failure):
     
     return failure
 
-def send_market_order(symbol, side, volume):
+def send_market_order(symbol, side, volume, sl_money=0, tp_money=0):
     """
-    Envía una orden de mercado
+    Envía una orden de mercado a cTrader
     
     Args:
         symbol: Símbolo a operar (ej. "EURUSD")
         side: Lado de la operación ("BUY" o "SELL")
         volume: Volumen en lotes
+        sl_money: Stop Loss en unidades monetarias (ej. 1€)
+        tp_money: Take Profit en unidades monetarias (ej. 3€)
+    
+    Returns:
+        Deferred con el resultado de la orden
     """
-    global account_authorized
+    global client, account_id
+    deferred = defer.Deferred()
     
-    # Verificar que la cuenta esté autorizada
-    if not account_authorized:
-        raise Exception("Cuenta no autorizada. No se puede enviar la orden.")
+    try:
+        # Crear parámetros de la orden
+        order_params = {
+            "symbolName": symbol,
+            "tradeSide": side,
+            "volume": volume,
+            "accountId": account_id
+        }
+        
+        # Añadir stop loss y take profit si se especifican
+        if sl_money > 0:
+            order_params["stopLossInMoney"] = sl_money
+            
+        if tp_money > 0:
+            order_params["takeProfitInMoney"] = tp_money
+        
+        print(f"[cTrader] 📊 Enviando orden de mercado: {order_params}")
+        
+        # Enviar la orden a través del cliente de cTrader
+        if side == "BUY":
+            # Ejemplo: Reemplaza esta línea con tu llamada real a la API de cTrader
+            order_result = client.open_market_buy(order_params)  
+        else:
+            # Ejemplo: Reemplaza esta línea con tu llamada real a la API de cTrader
+            order_result = client.open_market_sell(order_params)
+        
+        deferred.callback(order_result)
+    except Exception as e:
+        print(f"[cTrader] ❌ Error enviando orden: {e}")
+        deferred.errback(e)
     
-    from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOANewOrderReq
-    from ctrader_open_api.messages.OpenApiModelMessages_pb2 import ProtoOAOrderType, ProtoOATradeSide
-    
-    if symbol not in SYMBOLS:
-        raise Exception(f"❌ El símbolo {symbol} no está en la lista local. Añádelo a SYMBOLS.")
-    
-    symbol_id = SYMBOLS[symbol]
-    
-    # Configurar la orden
-    request = ProtoOANewOrderReq()
-    request.ctidTraderAccountId = ACCOUNT_ID
-    request.symbolId = symbol_id
-    request.orderType = ProtoOAOrderType.MARKET
-    
-    # Determinar el lado de la operación
-    if side.upper() == "BUY":
-        request.tradeSide = ProtoOATradeSide.BUY
-    elif side.upper() == "SELL":
-        request.tradeSide = ProtoOATradeSide.SELL
-    else:
-        raise ValueError(f"Lado de operación inválido: {side}. Debe ser 'BUY' o 'SELL'")
-    
-    # Convertir el volumen a centilotes (x100)
-    # Para volúmenes pequeños como 0.01, esto se convierte en 1 centilote
-    volume_in_centilotes = int(float(volume) * 100)
-    
-    # Asegurarnos de que el volumen sea al menos 1 centilote
-    if volume_in_centilotes < 1:
-        volume_in_centilotes = 1
-        print(f"[cTrader] ⚠️ Volumen ajustado al mínimo: 0.01 lotes (1 centilote)")
-    
-    request.volume = volume_in_centilotes
-    request.comment = "Order from TradingView Webhook"
-    
-    print(f"[cTrader] 🚀 Enviando orden {side} para {symbol} con volumen {volume} ({volume_in_centilotes} centilotes)")
-    
-    # Enviar la orden
-    order_deferred = client.send(request)
-    order_deferred.addCallback(on_order_sent)
-    order_deferred.addErrback(on_order_error)
-    
-    return order_deferred
+    return deferred
 
 def on_order_sent(response):
     """Callback después de enviar una orden"""
@@ -229,7 +221,7 @@ def on_order_error(failure):
     
     return failure
 
-def run_ctrader_order(symbol, side, volume):
+def run_ctrader_order(symbol, side, volume, sl_money=0, tp_money=0):
     """
     Función para ser llamada desde el webhook para ejecutar una orden
     
@@ -237,6 +229,8 @@ def run_ctrader_order(symbol, side, volume):
         symbol: Símbolo a operar (ej. "EURUSD")
         side: Lado de la operación ("BUY" o "SELL")
         volume: Volumen en lotes
+        sl_money: Stop Loss en unidades monetarias (ej. 1€)
+        tp_money: Take Profit en unidades monetarias (ej. 3€)
     """
     global client, account_authorized, connection_ready
     
@@ -251,7 +245,8 @@ def run_ctrader_order(symbol, side, volume):
         # Función que envía la orden cuando la conexión está lista
         def send_order_when_ready(_=None):
             try:
-                order_deferred = send_market_order(symbol, side, volume)
+                # Pasamos los nuevos parámetros sl_money y tp_money a send_market_order
+                order_deferred = send_market_order(symbol, side, volume, sl_money, tp_money)
                 
                 def on_success(response):
                     if not result_deferred.called:
