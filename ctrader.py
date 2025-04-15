@@ -425,21 +425,41 @@ def pips_to_price(symbol_id, pips, side, is_sl=True):
 def get_open_positions():
     """
     Obtiene todas las posiciones abiertas actualmente para actualizar el estado
-    
-    Returns:
-        Un deferred que se resolverá cuando se complete la operación
     """
     global open_positions
     
     from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOAReconcileReq
     
     result_deferred = defer.Deferred()
-    
+   
     try:
         # Solicitud para reconciliar posiciones
         request = ProtoOAReconcileReq()
         request.ctidTraderAccountId = ACCOUNT_ID
         
+        # Guardar el manejador original (usar getMessageReceivedCallback)
+        original_handler = client.getMessageReceivedCallback()
+        
+        # Función para manejar la respuesta (MUEVE ESTA DEFINICIÓN AQUÍ)
+        def on_reconcile_received(msg):
+            from ctrader_open_api import Protobuf
+            from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOAReconcileRes
+            
+            # Solo procesar mensajes de tipo ProtoOAReconcileRes
+            if msg.payloadType == ProtoOAReconcileRes().payloadType:
+                # resto de la implementación...
+                return True
+            return False
+        
+        # Establecer un manejador temporal
+        def temp_handler(client_instance, msg):
+            if not on_reconcile_received(msg):
+                # Si no procesamos este mensaje, pasarlo al manejador original
+                if original_handler:
+                    original_handler(client_instance, msg)
+        
+        client.setMessageReceivedCallback(temp_handler)
+             
         # Función para manejar la respuesta
         def on_reconcile_received(msg):
             from ctrader_open_api import Protobuf
