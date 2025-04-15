@@ -678,3 +678,103 @@ timestamp,symbol,order,volume
 /home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
 ]]
 ]"
+2025-04-15T19:05:04.039170+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:06:02.385560+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:07:01.179756+00:00,BTCUSD,BUY,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:08:02.022076+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:10:07.563354+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:11:01.040389+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:12:01.551847+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:733:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:610:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:15:21.315031+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:745:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:622:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:16:03.220208+00:00,BTCUSD,SELL,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:745:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:622:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"
+2025-04-15T19:17:01.242443+00:00,BTCUSD,BUY,0.1,5.0,,,"ERROR: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.defer.FirstError'>: FirstError[#0, [Failure instance: Traceback: <class 'AttributeError'>: Assignment not allowed to repeated field ""symbolId"" in protocol message object.
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:745:send_market_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:622:process_new_order
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:291:pips_to_price
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:268:get_symbol_info
+--- <exception caught here> ---
+/home/ubuntu/tradingview-ctrader-webhook/ctrader.py:217:get_symbol_info
+/home/ubuntu/env/lib/python3.12/site-packages/google/protobuf/internal/python_message.py:664:setter
+]]
+]"

@@ -214,7 +214,7 @@ def get_symbol_info(symbol_id):
         # Crear solicitud para obtener información del símbolo
         request = ProtoOASymbolByIdReq()
         request.ctidTraderAccountId = ACCOUNT_ID
-        request.symbolId = symbol_id
+        request.symbolId = symbol_id  # Este es el campo que causa el problema
         
         # Crear un deferred para esperar la respuesta
         response_deferred = defer.Deferred()
@@ -303,7 +303,8 @@ def pips_to_price(symbol_id, pips, side, is_sl=True):
             # Suscribirse a spots para obtener el precio actual
             spots_request = ProtoOASubscribeSpotsReq()
             spots_request.ctidTraderAccountId = ACCOUNT_ID
-            spots_request.symbolId = [symbol_id]
+            # Corregir aquí: symbolId es un campo repetido, debe usar append
+            spots_request.symbolId.append(symbol_id)  # Usar append en lugar de asignación directa
             
             spots_deferred = client.send(spots_request)
             
@@ -322,7 +323,8 @@ def pips_to_price(symbol_id, pips, side, is_sl=True):
                         from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOAUnsubscribeSpotsReq
                         unsub_request = ProtoOAUnsubscribeSpotsReq()
                         unsub_request.ctidTraderAccountId = ACCOUNT_ID
-                        unsub_request.symbolId = [symbol_id]
+                        # Corregir aquí también
+                        unsub_request.symbolId.append(symbol_id)  # Usar append en lugar de asignación directa
                         client.send(unsub_request)
                         
                         # Resolver con el precio del spot
@@ -400,6 +402,16 @@ def pips_to_price(symbol_id, pips, side, is_sl=True):
             print(f"[cTrader] ❌ Error calculando precio: {str(e)}")
             result_deferred.errback(e)
     
+    # Manejar errores
+    def on_symbol_info_error(failure):
+        print(f"[cTrader] ❌ Error obteniendo información del símbolo: {failure}")
+        result_deferred.errback(failure)
+        return failure
+    
+    symbol_info_deferred.addCallbacks(calculate_price, on_symbol_info_error)
+    
+    return result_deferred
+
     # Manejar errores
     def on_symbol_info_error(failure):
         print(f"[cTrader] ❌ Error obteniendo información del símbolo: {failure}")
@@ -599,7 +611,7 @@ def send_market_order(symbol, side, volume, sl_pips=None, tp_pips=None, candle_c
     # Deferred para el resultado final
     result_deferred = defer.Deferred()
     
-    # Función para procesar la nueva orden - definirla antes de usarla
+    # Función para procesar la nueva orden
     def process_new_order():
         # Calcular precios basados en pips si se especifican
         sl_deferred = defer.succeed(None)
@@ -733,6 +745,7 @@ def send_market_order(symbol, side, volume, sl_pips=None, tp_pips=None, candle_c
         process_new_order()
     
     return result_deferred
+
     
     # Función para procesar la nueva orden
     def process_new_order():
