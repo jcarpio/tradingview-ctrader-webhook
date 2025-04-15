@@ -866,3 +866,105 @@ timestamp,symbol,order,volume
 2025-04-15T19:56:03.851141+00:00,BTCUSD,BUY,0.1,,,,SUCCESS
 2025-04-15T19:57:08.093292+00:00,BTCUSD,SELL,0.1,,,,SUCCESS
 2025-04-15T19:58:03.096054+00:00,BTCUSD,SELL,0.1,,,,SUCCESS
+2025-04-15T20:05:02.482242+00:00,BTCUSD,SELL,0.1,,,,SUCCESS
+2025-04-15T20:07:06.530582+00:00,BTCUSD,BUY,0.1,,,,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:08:19.083119+00:00,BTCUSD,SELL,0.1,,,,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:09:07.656426+00:00,BTCUSD,BUY,0.1,,,,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:10:02.972252+00:00,BTCUSD,BUY,0.1,,,,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:11:02.617025+00:00,BTCUSD,BUY,0.1,,,,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:12:08.838987+00:00,BTCUSD,BUY,0.1,,,,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:33:01.271118+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:34:01.267408+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:35:02.268820+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T20:36:01.268919+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:37:02.271990+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T20:38:02.272341+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:39:01.265206+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:40:02.289670+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:41:01.271342+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T20:42:02.266051+00:00,BTCUSD,SELL,0.1,SUCCESS
+2025-04-15T20:43:01.269935+00:00,BTCUSD,BUY,0.1,SUCCESS
+2025-04-15T20:48:02.666313+00:00,ALL,CLOSE,0,"ERROR: [Failure instance: Traceback: <class 'AttributeError'>: 'ProtoMessage' object has no attribute 'position'
+/home/ubuntu/OpenApiPy/ctrader_open_api/factory.py:15:received
+/home/ubuntu/OpenApiPy/ctrader_open_api/client.py:46:_received
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:877:callback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/tradingview-ctrader-webhook/henry-webhook-v6.py:52:handle_positions
+]"
+2025-04-15T20:48:04.673154+00:00,BTCUSD,SELL,0.1,SUCCESS (after close error)
+2025-04-15T20:49:06.074186+00:00,ALL,CLOSE,0,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
+2025-04-15T20:49:11.075691+00:00,BTCUSD,SELL,0.1,"ERROR: [Failure instance: Traceback: <class 'twisted.internet.defer.TimeoutError'>: (5, 'Deferred')
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:798:timeItOut
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:957:cancel
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:916:errback
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:984:_startRunCallbacks
+--- <exception caught here> ---
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:1078:_runCallbacks
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:809:convertCancelled
+/home/ubuntu/env/lib/python3.12/site-packages/twisted/internet/defer.py:293:_cancelledToTimedOutError
+]"
